@@ -120,14 +120,14 @@ const RouteDetailsComponent: React.FC<unknown> = () => {
           </div>
 
           <div className="w-80 bg-gray-50 px-6 py-4 overflow-y-auto flex flex-col justify-between">
-            <div>
+            <div className="overflow-auto h-[80vh]">
               <div className="text-gray-700 text-xs uppercase">All Stops</div>
-              <div className="mt-4 space-y-4">
+              { trip.stops?.length == 0 ? "No stops found" : <><div className="mt-4 space-y-4">
                 {stops?.map((stop, index) => (
                   <StopComponent key={index} stop={stop}/>
                 ))}
-              </div>
-            </div>
+              </div></>
+            }            </div>
             <div className="flex flex-col gap-3">
 
             <form

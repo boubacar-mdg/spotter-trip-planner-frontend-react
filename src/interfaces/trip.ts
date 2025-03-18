@@ -1,3 +1,4 @@
+import { EldLog } from "./eld-log";
 import { Stop } from "./stop";
 
 export interface Trip {
@@ -5,4 +6,5 @@ export interface Trip {
     pickup_location: string;
     dropoff_location: string;
     stops: Stop[];
+    eld_logs: EldLog[];
   }

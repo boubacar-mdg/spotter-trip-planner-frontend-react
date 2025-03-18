@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -15,7 +15,7 @@ L.Icon.Default.mergeOptions({
 });
 
 
-const RouteMapComponent: React.FC<{ trip: Trip }> = ({ trip }) => {
+const RouteMapComponent: FC<{ trip: Trip }> = ({ trip }) => {
   const [mapPosition, setMapPosition] = useState<[number, number]>([40, -98]); // Default to US center
   const [zoom, setZoom] = useState<number>(4);
   const [routePoints, setRoutePoints] = useState<[number, number][]>([]);
