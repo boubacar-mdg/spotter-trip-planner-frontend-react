@@ -9,8 +9,9 @@ import { StopType } from "../../../enums/stop-type";
 import CustomSelect from "../../../commons/ui/CustomSelect";
 import SimpleButton from "../../../commons/ui/SimpleButton";
 import StopComponent from "./StopComponent";
-import { Tooltip } from "antd";
+import { Modal, Tooltip } from "antd";
 import { Stop } from "../../../interfaces/stop";
+import ELDLog from "../../eld/components/ELDLog";
 
 const RouteDetailsComponent: React.FC<unknown> = () => {
   const { id } = useParams();
@@ -19,6 +20,7 @@ const RouteDetailsComponent: React.FC<unknown> = () => {
   const [stops, setStops] = useState<Stop[] | undefined >(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("Filter by");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   
 
   const stopTypesArray: {
@@ -52,6 +54,18 @@ const RouteDetailsComponent: React.FC<unknown> = () => {
   }, [id]);
 
 
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
   useEffect(() => {
     if(search == StopType.NA) {
       setStops(trip?.stops);
@@ -69,6 +83,17 @@ const RouteDetailsComponent: React.FC<unknown> = () => {
     return <div className="error">Trip not found</div>;
   }
   return (
+    <>
+    <Modal
+        title=" "
+        open={isModalOpen}
+        onOk={handleOk}
+        okText="OK"
+        onCancel={handleCancel}
+        width={1000}
+      >
+      <ELDLog logs={trip.eld_logs}/>
+      </Modal>
     <div className="flex h-screen w-screen">
       <div className="flex flex-col justify-between items-center bg-gray-100/30 p-4 w-24">
         <div className="flex flex-col py-4 items-center">
@@ -122,7 +147,7 @@ const RouteDetailsComponent: React.FC<unknown> = () => {
           <div className="w-80 bg-gray-50 px-6 py-4 overflow-y-auto flex flex-col justify-between">
             <div className="overflow-auto h-[80vh]">
               <div className="text-gray-700 text-xs uppercase">All Stops</div>
-              { trip.stops?.length == 0 ? "No stops found" : <><div className="mt-4 space-y-4">
+              { trip.stops?.length == 0 ? "No stops found" : <><div className="mt-4 mb-4 space-y-4">
                 {stops?.map((stop, index) => (
                   <StopComponent key={index} stop={stop}/>
                 ))}
@@ -133,7 +158,8 @@ const RouteDetailsComponent: React.FC<unknown> = () => {
             <form
               onSubmit={(e: any) => {
                 e.preventDefault();
-                navigate(`/trip/eld/${id}/logs`);
+                showModal();
+                //navigate(`/trip/eld/${id}/logs`, {state: trip.eld_logs});
               }}
             >
               <SimpleButton
@@ -157,6 +183,7 @@ const RouteDetailsComponent: React.FC<unknown> = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

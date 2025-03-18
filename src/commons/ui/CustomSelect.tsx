@@ -1,10 +1,7 @@
 import { ChevronDown } from 'lucide-react';
 import { Dispatch, SetStateAction, useState } from 'react';
 
-const CustomSelect = ({ options, onChange }: { options: {
-    key: string;
-    name: string;
-  }[],  onChange: Dispatch<SetStateAction<string>>; }) => {
+const CustomSelect = ({ options, onChange }: { options: any[],  onChange: Dispatch<SetStateAction<any>>; }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState('Filtre by');
 
@@ -17,10 +14,10 @@ const CustomSelect = ({ options, onChange }: { options: {
   };
 
   return (
-    <div className="relative hover:opacity-70 transition">
+    <div className="relative ">
       <button 
         onClick={toggleDropdown}
-        className="flex items-center px-6 py-3 bg-white rounded-full border border-gray-200 text-gray-800 font-medium shadow-sm"
+        className="flex items-center px-6 py-3 bg-white rounded-full border border-gray-200 text-gray-800 font-medium shadow-sm hover:opacity-70 transition"
       >
         <span>{selected}</span>
         <ChevronDown size={20} className="ml-2" />

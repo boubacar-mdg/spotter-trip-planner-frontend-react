@@ -48,14 +48,11 @@ const RouteMapComponent: FC<{ trip: Trip }> = ({ trip }) => {
         const validPoints = [currentPoint, pickupPoint, dropoffPoint].filter((p): p is [number, number] => p !== null);
         
         if (validPoints.length > 0) {
-          // Center map on first valid point
+        
           setMapPosition(validPoints[0]);
           setZoom(8);
-          
-          // Create route
           setRoutePoints(validPoints);
           
-          // Create stop markers
           const stopMarkers: StopPoint[] = [];
           
           if (trip.stops && trip.stops.length > 0) {
