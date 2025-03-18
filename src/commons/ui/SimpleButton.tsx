@@ -18,8 +18,9 @@ const SimpleButton: React.FC<SimpleButtonProps> = ({
   title,
   loading = false,
   py = 18,
-  color = '#008080'
+  color = "#008080",
 }) => {
+  console.log(py);
   return (
     <>
       <div className="mt-1">
@@ -32,10 +33,21 @@ const SimpleButton: React.FC<SimpleButtonProps> = ({
           style={{ fontFamily: "Plus Jakarta Sans" }}
         >
           <div className="flex gap-3 justify-center items-center">
-          {loading && <Spin className="text-white" indicator={<LoadingOutlined color="#ffffff" style={{ fontSize: 16, color: "white" }} spin />} />}
-          <span className="mt-1 mb-1 font-semibold text-[14px] leading-[17.64px]">
-            {title}
-          </span>
+            {loading && (
+              <Spin
+                className="text-white"
+                indicator={
+                  <LoadingOutlined
+                    color="#ffffff"
+                    style={{ fontSize: 16, color: "white" }}
+                    spin
+                  />
+                }
+              />
+            )}
+            <span className="mt-1 mb-1 font-semibold text-[14px] leading-[17.64px]">
+              {title}
+            </span>
           </div>
         </motion.button>
       </div>
