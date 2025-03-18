@@ -1,4 +1,5 @@
 const StopType = {
+NA: "Filter By",
   START: "start",
   REST: "rest",
   FUEL: "fuel",

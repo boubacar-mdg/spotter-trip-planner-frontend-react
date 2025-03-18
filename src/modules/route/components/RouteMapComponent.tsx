@@ -114,7 +114,7 @@ const RouteMapComponent: React.FC<{ trip: Trip }> = ({ trip }) => {
       <MapContainer
         center={mapPosition}
         zoom={zoom}
-        style={{ height: '95vh', width: '100%' }}
+        style={{ height: '92.3vh', width: '100%' }}
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
