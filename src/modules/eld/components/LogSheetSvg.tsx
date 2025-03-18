@@ -1,9 +1,9 @@
-import React, { useEffect, useRef } from 'react';
-import { EldLog, LogEvent, LogSummary } from '../../../interfaces/eld-log';
+import { useEffect, useRef } from 'react';
+import { EldLog, LogEvent } from '../../../interfaces/eld-log';
 import CustomSelect from '../../../commons/ui/CustomSelect';
 
 const LogSheetSvg = ({ logData, sortedLogs, onDateChange }: { logData: EldLog, sortedLogs: any, onDateChange:any }) => {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  //const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const svgRef = useRef<SVGSVGElement | null>(null);
 
   const statusCodes: { [key: string]: { label: string; color: string; y: number } } = {
@@ -25,13 +25,6 @@ const LogSheetSvg = ({ logData, sortedLogs, onDateChange }: { logData: EldLog, s
       const timeB = b.time.split(':').map(Number);
       return (timeA[0] * 60 + timeA[1]) - (timeB[0] * 60 + timeB[1]);
     });
-  };
-
-  // Convert time string to X position
-  const timeToX = (time: string, width: number) => {
-    const [hours, minutes] = time.split(':').map(Number);
-    const totalMinutes = hours * 60 + minutes;
-    return 50 + (totalMinutes / (24 * 60)) * (width - 100);
   };
 
   // Draw SVG elements instead of canvas

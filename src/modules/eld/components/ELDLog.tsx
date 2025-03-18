@@ -20,9 +20,10 @@ const ELDLog: FC<any> = ({logs}) => {
     new Date(a.date).getTime() - new Date(b.date).getTime()
   );
 
-  const formatDate = (dateStr: any) => {
+/*   const formatDate = (dateStr: any) => {
     return new Date(dateStr).toLocaleDateString();
   };
+ */
 
   return (
     <div className="eld-logs">
