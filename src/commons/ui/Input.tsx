@@ -1,4 +1,9 @@
-import React, { Dispatch, ForwardedRef, forwardRef, SetStateAction } from "react";
+import React, {
+  Dispatch,
+  ForwardedRef,
+  forwardRef,
+  SetStateAction,
+} from "react";
 
 interface InputProps {
   id?: string;
@@ -6,25 +11,34 @@ interface InputProps {
   type: string;
   placeholder: string;
   value?: string | number;
-  label?: string; 
-  icon?: React.ReactNode; 
-  onChange: Dispatch<SetStateAction<any>>; 
+  label?: string;
+  icon?: React.ReactNode;
+  onChange: Dispatch<SetStateAction<any>>;
   className?: string;
   height?: number;
+  min?: number;
+  max?: number;
+  step?: number;
 }
 
-const Input = forwardRef(function Input({
-  id,
-  name,
-  type,
-  placeholder,
-  onChange,
-  label,
-  icon,
-  value,
-  className,
-  height = 14,
-}: InputProps,  ref: ForwardedRef<HTMLInputElement>) {
+const Input = forwardRef(function Input(
+  {
+    id,
+    name,
+    type,
+    placeholder,
+    onChange,
+    label,
+    icon,
+    value,
+    className,
+    height = 14,
+    min,
+    max,
+    step,
+  }: InputProps,
+  ref: ForwardedRef<HTMLInputElement>
+) {
   return (
     <div>
       {label && (
@@ -49,10 +63,19 @@ const Input = forwardRef(function Input({
           id={id}
           name={name}
           value={value}
-          className={className ? className : `block w-full h-${height} rounded-md text-[14px] border font-medium border-[#BCCDED] py-3 ${icon ? "pl-10" : "pl-3"} text-gray-900 placeholder:text-[#878787] placeholder:text-[14px] placeholder:font-normal sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#BCCDED] focus:border-[#BCCDED] transition`}
+          className={
+            className
+              ? className
+              : `block w-full h-${height} rounded-md text-[14px] border font-medium border-[#BCCDED] py-3 ${
+                  icon ? "pl-10" : "pl-3"
+                } text-gray-900 placeholder:text-[#878787] placeholder:text-[14px] placeholder:font-normal sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#BCCDED] focus:border-[#BCCDED] transition`
+          }
           placeholder={placeholder}
           onChange={onChange}
           ref={ref}
+          min={type === "number" ? min : undefined}
+          max={type === "number" ? max : undefined}
+          step={type === "number" ? step : undefined}
         />
       </div>
     </div>

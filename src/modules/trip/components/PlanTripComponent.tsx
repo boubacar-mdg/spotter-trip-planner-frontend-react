@@ -8,8 +8,6 @@ import {
   showErrorToast,
   showSuccessToast,
 } from "../../../commons/services/toast-service";
-import { Spin } from "antd";
-import LoadingOutlined from "@ant-design/icons/lib/icons/LoadingOutlined";
 import Logo from "../../../commons/ui/Logo";
 
 const PlanTripComponent: React.FC<unknown> = () => {
@@ -66,7 +64,7 @@ const PlanTripComponent: React.FC<unknown> = () => {
   return (
     <>
       <div
-        className="flex min-h-screen  flex-col px-6 py-12 lg:px-8 bg-custom-gradient"
+        className="flex min-h-screen  flex-col justify-center items-center px-6 lg:px-8 bg-custom-gradient"
         style={{ fontFamily: "Plus Jakarta Sans" }}
       >
         <div className="sm:mx-auto sm:w-full sm:max-w-sm flex justify-between">
@@ -116,6 +114,9 @@ const PlanTripComponent: React.FC<unknown> = () => {
               label="Current cycle number (hours 0-11)"
               value={formData.current_cycle_hours}
               onChange={handleInputChange}
+              step={0.5}
+              min={0}
+              max={11}
             />
 
             <SimpleButton
