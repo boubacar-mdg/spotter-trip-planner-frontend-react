@@ -1,4 +1,4 @@
-const apiUrl: string = "http://localhost:8000/api/v1";
+const apiUrl: string = "https://spotter-api.lavandesn.com/api/v1";
 
 // Time out 
 const apiTimeout: number = 50000;
