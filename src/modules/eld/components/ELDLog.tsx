@@ -1,10 +1,7 @@
 import { FC, useState } from 'react';
 import LogSheetSvg from './LogSheetSvg';
 
-const ELDLog: FC<any> = ({logs}) => {
-
-  //const location = useLocation();
-  //const  logs  = location.state || {};
+const ELDLog: FC<{logs: any}> = ({logs}) => {
     
   const [selectedLogIndex, setSelectedLogIndex] = useState(0);
 
@@ -20,18 +17,11 @@ const ELDLog: FC<any> = ({logs}) => {
     new Date(a.date).getTime() - new Date(b.date).getTime()
   );
 
-/*   const formatDate = (dateStr: any) => {
-    return new Date(dateStr).toLocaleDateString();
-  };
- */
 
   return (
     <div className="eld-logs">
       <div className="log-selector">
         <h2>ELD Logs</h2>
-       {/*  <div className="log-tabs">
-           <CustomSelect options={sortedLogs.map((log, index) => {return {key: index, name: formatDate(log.date)} })} onChange={setSelectedLogIndex} />
-        </div> */}
       </div>
       
       <div className="log-content">

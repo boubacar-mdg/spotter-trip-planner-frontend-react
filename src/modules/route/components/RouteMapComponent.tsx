@@ -14,7 +14,6 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow,
 });
 
-
 const RouteMapComponent: FC<{ trip: Trip }> = ({ trip }) => {
   const [mapPosition, setMapPosition] = useState<[number, number]>([40, -98]); // Default to US center
   const [zoom, setZoom] = useState<number>(4);

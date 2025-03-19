@@ -9,11 +9,14 @@ import {
   showSuccessToast,
 } from "../../../commons/services/toast-service";
 import Logo from "../../../commons/ui/Logo";
+import { useMutation } from "@tanstack/react-query";
 
-const PlanTripComponent: React.FC<unknown> = () => {
+interface TripPlannerPayload { current_location: string; pickup_location: string; dropoff_location: string; current_cycle_hours: number };
+
+const PlanTripComponent: React.FC<{}> = () => {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState({
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [formData, setFormData] = useState<TripPlannerPayload>({
     current_location: "",
     pickup_location: "",
     dropoff_location: "",
@@ -28,7 +31,29 @@ const PlanTripComponent: React.FC<unknown> = () => {
     });
   };
 
-  const handlePlanTrip = async (e: any) => {
+  const mutation = useMutation({
+    mutationFn: async (formData: TripPlannerPayload) => {
+      const trip = await tripApi.createTrip(formData);
+      await tripApi.calculateRoute(trip.id);
+      return trip;
+    },
+    onMutate: () => {
+      setIsLoading(true);
+    },
+    onSuccess: (trip) => {
+      showSuccessToast("A new trip has been created successfully");
+      navigate(`/route/details/${trip.id}`);
+    },
+    onError: (error) => {
+      console.error("Error creating trip:", error);
+      showErrorToast("Failed to create trip. Please try again.");
+    },
+    onSettled: () => {
+      setIsLoading(false);
+    },
+  });
+
+  const handlePlanTrip = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (
@@ -45,20 +70,7 @@ const PlanTripComponent: React.FC<unknown> = () => {
       return;
     }
 
-    try {
-      setIsLoading(true);
-      const trip = await tripApi.createTrip(formData);
-
-      await tripApi.calculateRoute(trip.id);
-
-      showSuccessToast("A new trip has been created successfully");
-      navigate(`/route/details/${trip.id}`);
-    } catch (error) {
-      console.error("Error creating trip:", error);
-      showErrorToast("Failed to create trip. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
+    mutation.mutate(formData);
   };
 
   return (

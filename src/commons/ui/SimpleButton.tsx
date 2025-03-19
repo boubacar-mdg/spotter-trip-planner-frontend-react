@@ -10,6 +10,7 @@ interface SimpleButtonProps {
   loading?: boolean;
   py?: number;
   color?: string;
+  onClick?: () => void;
 }
 
 const SimpleButton: React.FC<SimpleButtonProps> = ({
@@ -19,6 +20,7 @@ const SimpleButton: React.FC<SimpleButtonProps> = ({
   loading = false,
   py = 18,
   color = "#008080",
+  onClick,
 }) => {
   console.log(py);
   return (
@@ -28,6 +30,7 @@ const SimpleButton: React.FC<SimpleButtonProps> = ({
           whileTap={{ scale: 0.993 }}
           transition={{ type: "spring", stiffness: 400, damping: 10 }}
           type={type}
+          onClick={onClick ? onClick : () => {}}
           disabled={disabled}
           className={`flex w-full justify-center items-center rounded-md bg-[${color}] hover:opacity-90 px-6 py-3 text-xs font-semibold leading-4 text-white shadow-sm gap-3 cursor-pointer`}
           style={{ fontFamily: "Plus Jakarta Sans" }}
