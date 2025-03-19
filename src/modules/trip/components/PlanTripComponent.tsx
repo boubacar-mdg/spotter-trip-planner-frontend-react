@@ -3,15 +3,15 @@ import Title from "../../../commons/ui/Title";
 import { useNavigate } from "react-router-dom";
 import Input from "../../../commons/ui/Input";
 import SimpleButton from "../../../commons/ui/SimpleButton";
-import { tripApi } from "../../../api/services/trip_api";
 import {
   showErrorToast,
   showSuccessToast,
 } from "../../../commons/services/toast-service";
 import Logo from "../../../commons/ui/Logo";
 import { useMutation } from "@tanstack/react-query";
+import { tripApi } from "../../../api/services/trip_api";
+import { TripPlannerPayload } from "../../../interfaces/payload";
 
-interface TripPlannerPayload { current_location: string; pickup_location: string; dropoff_location: string; current_cycle_hours: number };
 
 const PlanTripComponent: React.FC<{}> = () => {
   const navigate = useNavigate();

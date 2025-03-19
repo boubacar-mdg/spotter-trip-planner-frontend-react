@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { tripApi } from "../../../api/services/trip_api";
 import RouteMapComponent from "./RouteMapComponent";
 import { Trip } from "../../../interfaces/trip";
 import Logo from "../../../commons/ui/Logo";
@@ -13,6 +12,7 @@ import { Stop } from "../../../interfaces/stop";
 import ELDLog from "../../eld/components/ELDLog";
 import { useQuery } from "@tanstack/react-query";
 import { showErrorToast } from "../../../commons/services/toast-service";
+import { tripApi } from "../../../api/services/trip_api";
 
 const RouteDetailsComponent: React.FC<unknown> = () => {
   const { id } = useParams();
@@ -25,7 +25,7 @@ const RouteDetailsComponent: React.FC<unknown> = () => {
     isSuccess,
   } = useQuery<Trip>({
     queryKey: ["routeDetails", id],
-    queryFn: () => tripApi.getTrip(id),
+    queryFn: () => tripApi.getTrip(parseInt(id!, 10)),
   });
   const [stops, setStops] = useState<Stop[] | undefined>(undefined);
   const [search, setSearch] = useState("Filter by");

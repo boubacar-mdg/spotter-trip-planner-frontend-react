@@ -1,8 +1,9 @@
 import { apiUrl } from '../../config/api.config';
+import { TripPlannerPayload } from '../../interfaces/payload';
 import axiosInstance from '../axios/axiosIstance';
 
 const tripApi = {
-  createTrip: async (tripData:any) => {
+  createTrip: async (tripData: TripPlannerPayload) => {
     try {
       const response = await axiosInstance.post(`${apiUrl}/trips/`, tripData);
       return response.data;
@@ -11,7 +12,7 @@ const tripApi = {
     }
   },
   
-  calculateRoute: async (tripId:any) => {
+  calculateRoute: async (tripId: number) => {
     try {
       const response = await axiosInstance.post(`${apiUrl}/trips/${tripId}/determine_route_stops/`);
       return response.data;
@@ -20,7 +21,7 @@ const tripApi = {
     }
   },
   
-  getTrip: async (tripId:any) => {
+  getTrip: async (tripId: number) => {
     try {
       const response = await axiosInstance.get(`${apiUrl}/trips/${tripId}/`);
       return response.data;
