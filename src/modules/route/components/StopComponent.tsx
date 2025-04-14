@@ -19,6 +19,22 @@ const StopComponent: FC<{ stop: Stop }> = ({ stop }) => {
         return type;
     }
   };
+  const getStopTypeAction = (type: string) => {
+    switch (type) {
+      case "start":
+        return "departure";
+      case "pickup":
+        return "pickup";
+      case "dropoff":
+        return "dropoff";
+      case "rest":
+        return "resting";
+      case "fuel":
+        return "fueling";
+      default:
+        return type;
+    }
+  };
 
   const getStopIcon = (type: string) => {
     switch (type) {
@@ -52,8 +68,9 @@ const StopComponent: FC<{ stop: Stop }> = ({ stop }) => {
     const hours = Math.floor(durationMs / (1000 * 60 * 60));
     const minutes = Math.floor((durationMs % (1000 * 60 * 60)) / (1000 * 60));
 
-    return `${hours}h ${minutes}m`;
+    return `${hours > 0 ? `${hours}h` : ``} ${minutes}m`;
   };
+
   return (
     <Tooltip
       title={`Arrival Time: ${formatDateTime(
@@ -72,9 +89,14 @@ const StopComponent: FC<{ stop: Stop }> = ({ stop }) => {
         </div>
 
         <div className="flex items-center">
+        <Tooltip
+      title={`Time spent at ${stop.location} for ${getStopTypeAction(stop.stop_type)}`}
+      placement="top"
+    >
           <span className="text-gray-500 mr-4 text-[11px] font-bold">
             {calculateDuration(stop.arrival_time, stop.departure_time)}
-          </span>
+          </span>  </Tooltip>
+
           <div className="w-6 h-6 bg-gray-100 rounded-full flex items-center justify-center">
             {getStopIcon(stop.stop_type)}
           </div>
