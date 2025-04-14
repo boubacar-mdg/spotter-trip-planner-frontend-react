@@ -26,7 +26,7 @@ const ELDLog: FC<{logs: any}> = ({logs}) => {
       
       <div className="log-content">
         {sortedLogs[selectedLogIndex] && (
-          <LogSheetSvg logData={sortedLogs[selectedLogIndex].log_data} sortedLogs={sortedLogs} onDateChange={setSelectedLogIndex}  />
+          <LogSheetSvg log={sortedLogs[selectedLogIndex]} sortedLogs={sortedLogs} onDateChange={setSelectedLogIndex}  />
         )}
       </div>
     </div>
