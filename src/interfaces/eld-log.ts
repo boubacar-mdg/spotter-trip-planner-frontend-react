@@ -12,12 +12,15 @@ export interface LogSummary {
 }
 
 export interface EldLog {
-  driver_name: string;
-  carrier: string;
-  truck_number: string;
-  trailer_numbers: string;
-  date: string;
-  shipping_doc: string;
-  events: LogEvent[];
-  hours_summary: LogSummary;
+  id: number;
+  date: any;
+  log_data: {
+    driver_name: string;
+    carrier: string;
+    truck_number: string;
+    trailer_numbers: string;
+    shipping_doc: string;
+    events: LogEvent[];
+    hours_summary: LogSummary;
+  };
 }

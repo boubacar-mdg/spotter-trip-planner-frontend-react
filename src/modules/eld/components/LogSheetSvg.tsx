@@ -3,14 +3,15 @@ import { EldLog, LogEvent } from "../../../interfaces/eld-log";
 import CustomSelect from "../../../commons/ui/CustomSelect";
 
 const LogSheetSvg = ({
-  logData,
+  log,
   sortedLogs,
   onDateChange,
 }: {
-  logData: EldLog;
+  log: EldLog;
   sortedLogs: any;
   onDateChange: any;
 }) => {
+
   const svgRef = useRef<SVGSVGElement | null>(null);
 
   const statusCodes: {
@@ -23,8 +24,8 @@ const LogSheetSvg = ({
   };
 
   useEffect(() => {
-    if (!svgRef.current || !logData) return;
-  }, [logData]);
+    if (!svgRef.current || !log.log_data) return;
+  }, [log.log_data]);
 
   const sortEvents = (events: LogEvent[]) => {
     if (!events || events.length === 0) return [];
@@ -129,11 +130,11 @@ const LogSheetSvg = ({
   };
 
   const renderSvgEvents = () => {
-    if (!logData?.events || logData.events.length === 0) return null;
+    if (!log.log_data?.events || log.log_data.events.length === 0) return null;
 
     const width = 500;
     const timeColWidth = (width - 100) / 24;
-    const sortedEvents = sortEvents(logData.events);
+    const sortedEvents = sortEvents(log.log_data.events);
     const elements = [];
 
     // Draw lines between events
@@ -207,7 +208,7 @@ const LogSheetSvg = ({
   };
 
   const renderSvgHeader = () => {
-    if (!logData) return null;
+    if (!log.log_data) return null;
 
     const width = 900;
     const height = 300;
@@ -215,16 +216,16 @@ const LogSheetSvg = ({
     return (
       <>
         <text x={50} y={height - 80} fontSize="12px">{`Driver: ${
-          logData.driver_name || "N/A"
+          log.log_data.driver_name || "N/A"
         }`}</text>
         <text x={50} y={height - 65} fontSize="12px">{`Carrier: ${
-          logData.carrier || "N/A"
+          log.log_data.carrier || "N/A"
         }`}</text>
         <text x={50} y={height - 50} fontSize="12px">{`Truck #: ${
-          logData.truck_number || "N/A"
+          log.log_data.truck_number || "N/A"
         }`}</text>
         <text x={50} y={height - 35} fontSize="12px">{`Trailer #: ${
-          logData.trailer_numbers || "N/A"
+          log.log_data.trailer_numbers || "N/A"
         }`}</text>
 
         <text
@@ -232,23 +233,23 @@ const LogSheetSvg = ({
           y={height - 80}
           textAnchor="end"
           fontSize="12px"
-        >{`Date: ${new Date(logData.date).toLocaleDateString()}`}</text>
+        >{`Date: ${new Date(log.date).toLocaleDateString()}`}</text>
         <text
           x={width - 50}
           y={height - 65}
           textAnchor="end"
           fontSize="12px"
-        >{`Shipping Doc: ${logData.shipping_doc || "N/A"}`}</text>
+        >{`Shipping Doc: ${log.log_data.shipping_doc || "N/A"}`}</text>
       </>
     );
   };
 
   const renderSvgSummary = () => {
-    if (!logData?.hours_summary) return null;
+    if (!log.log_data?.hours_summary) return null;
 
     const width = 500;
     const height = 300;
-    const summary = logData.hours_summary;
+    const summary = log.log_data.hours_summary;
 
     return (
       <>
@@ -300,21 +301,21 @@ const LogSheetSvg = ({
           <h4 className="text-lg font-semibold mb-2">Driver Information</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             <p>
-              <strong>Driver:</strong> {logData?.driver_name || "N/A"}
+              <strong>Driver:</strong> {log.log_data?.driver_name || "N/A"}
             </p>
             <p>
-              <strong>Carrier:</strong> {logData?.carrier || "N/A"}
+              <strong>Carrier:</strong> {log.log_data?.carrier || "N/A"}
             </p>
             <p>
-              <strong>Truck #:</strong> {logData?.truck_number || "N/A"}
+              <strong>Truck #:</strong> {log.log_data?.truck_number || "N/A"}
             </p>
             <p>
-              <strong>Trailer #:</strong> {logData?.trailer_numbers || "N/A"}
+              <strong>Trailer #:</strong> {log.log_data?.trailer_numbers || "N/A"}
             </p>
           </div>
         </div>
 
-        {logData?.hours_summary && (
+        {log.log_data?.hours_summary && (
           <div className="hours-summary bg-[#008080]/10 p-4 rounded border-0} mb-4">
             <h4 className="text-lg font-semibold mb-2">Hours Summary</h4>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -326,7 +327,7 @@ const LogSheetSvg = ({
                 }}
               >
                 <p className="font-semibold">{statusCodes["D"].label}</p>
-                <p className="text-xl">{logData.hours_summary.driving}h</p>
+                <p className="text-xl">{log.log_data.hours_summary.driving}h</p>
               </div>
               <div
                 className="p-2 text-center rounded"
@@ -337,7 +338,7 @@ const LogSheetSvg = ({
               >
                 <p className="font-semibold">{statusCodes["ON"].label}</p>
                 <p className="text-xl">
-                  {logData.hours_summary.on_duty_not_driving}h
+                  {log.log_data.hours_summary.on_duty_not_driving}h
                 </p>
               </div>
               <div
@@ -349,7 +350,7 @@ const LogSheetSvg = ({
               >
                 <p className="font-semibold">{statusCodes["SB"].label}</p>
                 <p className="text-xl">
-                  {logData.hours_summary.sleeper_berth}h
+                  {log.log_data.hours_summary.sleeper_berth}h
                 </p>
               </div>
               <div
@@ -360,7 +361,7 @@ const LogSheetSvg = ({
                 }}
               >
                 <p className="font-semibold">{statusCodes["OFF"].label}</p>
-                <p className="text-xl">{logData.hours_summary.off_duty}h</p>
+                <p className="text-xl">{log.log_data.hours_summary.off_duty}h</p>
               </div>
             </div>
           </div>
@@ -378,8 +379,8 @@ const LogSheetSvg = ({
                 </tr>
               </thead>
               <tbody>
-                {logData?.events &&
-                  sortEvents(logData.events).map((event, index) => (
+                {log.log_data?.events &&
+                  sortEvents(log.log_data.events).map((event, index) => (
                     <tr
                       key={index}
                       className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
